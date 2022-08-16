@@ -26,7 +26,7 @@ class Brain{
     public boolean fullBoardCheck(List<List<String>> board){
         boolean full = false;
         // checks to see if there are any blank spaces
-        if (!board.contains("_")){
+        if (!board.contains(" ")){
             full = true;
         }
 
