@@ -27,14 +27,13 @@ public class ConnectFourApp {
 
 
     // BUSINESS METHODS
-
-
     public void execute() {
         showBanner();
-//            showBannerOld();
         showBoard();
         play();
         declareWinner();
+        showWinP1();
+        showWinP2();
     }
 
     private void play() {
@@ -103,8 +102,35 @@ public class ConnectFourApp {
             String banner = Files.readString(Path.of("resources/myBanner.txt"));
             Files.lines(Path.of("resources", "myBanner.txt"))
                     .forEach(line -> {
-                        System.out.println(line);
-                        // do something with 'line' here
+                        System.out.println("\033[33m" + line +  "\033[0m");
+//                        System.out.println("\033[31m" + line +  "\033[0m");
+//                        System.out.println(line);
+
+
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+            public void showWinP1() {
+                try {
+                    String banner = Files.readString(Path.of("resources/P1Wins.txt"));
+                    Files.lines(Path.of("resources", "P1Wins.txt"))
+                            .forEach(line -> {
+                                System.out.println("\033[36m" + line +  "\033[0m");
+                            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showWinP2() {
+        try {
+            String banner = Files.readString(Path.of("resources/P2Wins.txt"));
+            Files.lines(Path.of("resources", "P2Wins.txt"))
+                    .forEach(line -> {
+                        System.out.println("\033[31m" + line +  "\033[0m");
                     });
         } catch (IOException e) {
             e.printStackTrace();
