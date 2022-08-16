@@ -29,6 +29,7 @@ public class ConnectFourApp {
     // BUSINESS METHODS
     public void execute() {
         showBanner();
+        setBoard();
         showBoard();
         play();
         declareWinner();
