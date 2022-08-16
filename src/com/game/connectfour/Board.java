@@ -10,29 +10,29 @@ public class Board implements Cloneable {
     //Field
     private boolean player = false;
     private boolean endGame = false;
-    int height = 10;
+    private int height = 10;
     private String symbol;
     private int numberInput;
     private int userInput;
     private String playAgain;
     private final Scanner scanner = new Scanner(System.in);
     List<List<String>> mainBoard = new ArrayList<>(List.of(
-            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", "0"),
-            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "1"),
-            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", "2"),
-            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "3"),
-            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", "4"),
-            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "5"),
-            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", "6"),
-            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "7"),
-            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", "8"),
-            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "9"),
-            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", "10"),
-            List.of("|", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "|", "11"),
-            List.of("", "1", " ", "2", " ", " 3", " ", "4", " ", "5", " ", "6", " ", "7", " ", "12")
+            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
+            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|"),
+            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
+            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|"),
+            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
+            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|"),
+            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
+            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|"),
+            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
+            Arrays.asList("|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|", "-", "|"),
+            Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
+            List.of("|", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "|"),
+            List.of(" ", "1", " ", "2", " ", " 3", " ", "4", " ", "5", " ", "6", " ", "7", " ")
     ));
 
-    List<List<String>> board=new ArrayList<>(mainBoard);
+    List<List<String>> board = new ArrayList<>(mainBoard);
 
 //    List<List<String>> board;
 
@@ -50,7 +50,7 @@ public class Board implements Cloneable {
 //    }
 
     //business For Main
-     void printBoard() {
+    void printBoard() {
         System.out.println("\n\n");
         for (List<String> list : board) {
             System.out.println(list.toString()
@@ -84,7 +84,7 @@ public class Board implements Cloneable {
         }
     }
 
-     void winner() {
+    void winner() {
         if (endGame) {
             if (player) {
                 System.out.println("player1 win");
@@ -115,12 +115,12 @@ public class Board implements Cloneable {
 
 
     private void dropToken(Integer height, Integer numberInput, String symbol) {
-             if (board.get(height).get(numberInput).contains(" ")) {
-                 board.get(height).set(numberInput, symbol);
-             } else {
-                 height--;
-                 dropToken(height, numberInput, symbol);
-             }
+        if (board.get(height).get(numberInput).contains(" ")) {
+            board.get(height).set(numberInput, symbol);
+        } else {
+            height--;
+            dropToken(height, numberInput, symbol);
+        }
     }
 
 
@@ -133,7 +133,7 @@ public class Board implements Cloneable {
         }
     }
 
-    public static Board getInstance() {
+    static Board getInstance() {
         return new Board();
     }
 
