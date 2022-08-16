@@ -22,27 +22,16 @@ class Brain{
         return win;
     }
 
-    /*
-    public boolean fullColumnCheck(int column){
+
+    public boolean fullBoardCheck(List<List<String>> board){
         boolean full = false;
-
-        //rotated array matrix
-        List<List<String>> rotatedBoard = new ArrayList<>(0);
-        for (int i=0; i < board.get(0).size(); i++) {
-            List<String> column = new ArrayList<>(0);
-            for (List row: board) {
-                String element = (String) row.get(i);
-                column.add(element);
-            }
-            rotatedBoard.add(column);
+        // checks to see if there are any blank spaces
+        if (!board.contains("_")){
+            full = true;
         }
-
-
 
         return full;
     }
-
-     */
 
 
 
