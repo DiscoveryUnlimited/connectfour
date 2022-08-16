@@ -7,13 +7,14 @@ import java.util.List;
 
 class Brain{
     // FIELDS
-    private static final List<String> tokens = new ArrayList<>(Arrays.asList("O", "X"));
+    private final List<String> tokens = new ArrayList<>(Arrays.asList("O", "X"));
 
-
-
+    // CONSTRUCTOR
+    public Brain() {
+    }
 
     // BUSINESS METHODS
-    public static boolean winCheck(List<List<String>> board){
+    public boolean winCheck(List<List<String>> board){
         boolean win = false;
         // if any checks find a win return win
         if (horizontalCheck(board) || verticalCheck(board) || forwardDiagonalCheck(board) || backwardDiagonalCheck(board)){
@@ -36,7 +37,7 @@ class Brain{
 
 
     //Horizontal check
-    private static boolean horizontalCheck(List<List<String>> board){
+    private boolean horizontalCheck(List<List<String>> board){
         boolean win = false;
 
 
@@ -56,7 +57,7 @@ class Brain{
 
 
     //Vertical check
-    private static boolean verticalCheck(List<List<String>> board){
+    private boolean verticalCheck(List<List<String>> board){
         boolean win = false;
 
 
@@ -84,7 +85,7 @@ class Brain{
         return win;
     }
 
-    private static boolean forwardDiagonalCheck(List<List<String>> board){
+    private boolean forwardDiagonalCheck(List<List<String>> board){
         boolean win = false;
 
         // winning array
@@ -112,7 +113,7 @@ class Brain{
     }
 
 
-    private static boolean backwardDiagonalCheck(List<List<String>> board){
+    private boolean backwardDiagonalCheck(List<List<String>> board){
         boolean win = false;
 
         // winning array
@@ -139,7 +140,7 @@ class Brain{
         return win;
     }
     // checks augmented game board against winning array matrix
-    private static boolean internalChecker(List<List<String>> augmentedBoard, List<List<Integer>> winArray){
+    private boolean internalChecker(List<List<String>> augmentedBoard, List<List<Integer>> winArray){
         boolean win = false;
         for (String element: getTokens()) {
             for (List innerArray: augmentedBoard) {
@@ -172,7 +173,7 @@ class Brain{
 
 
     // ACCESSOR METHODS
-    public static List<String> getTokens() {
+    public List<String> getTokens() {
         return tokens;
     }
 
