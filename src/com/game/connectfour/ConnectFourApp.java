@@ -15,7 +15,7 @@ public class ConnectFourApp {
     private String p1 = "Player 1";
     private String p2 = "Player 2";
     private final Scanner scanner = new Scanner(System.in);
-    private final Board board = Board.getInstance();
+    private Board board;
     private String p1Token;
     private String p2Token;
 
@@ -27,14 +27,31 @@ public class ConnectFourApp {
 
 
     // BUSINESS METHODS
-
-
     public void execute() {
         showBanner();
-//            showBannerOld();
         showBoard();
         play();
         declareWinner();
+        showWinP1();
+        showWinP2();
+        restartGame();
+    }
+    
+    private void restartGame() {
+        boolean validInput = false;
+        while (!validInput){
+            System.out.println("Would you like to play again [y/n]?\n");
+            String playAgain = scanner.nextLine().trim();
+
+            if (playAgain.matches("y|n")){
+                if (playAgain.equalsIgnoreCase("y")) {
+                    execute();
+                } else {
+                    endBanner();
+                }
+                validInput = true;
+            }
+        }
     }
 
     private void play() {
@@ -45,54 +62,13 @@ public class ConnectFourApp {
         board.printBoard();
     }
 
-    // TODO
-    //    public void startGame() {
-    //        boolean startGame = false;
-    //        while(!startGame) {
-    //            System.out.println("Would you like to play a new game? [Y/N]:  ");
-    //            Scanner scanner;
-    //            String input = scanner.nextLine().trim().toUpperCase();
-    //            if (input != "Y" | input != "O") {
-    //                System.out.println("Invalid choice. Please select either (Y) or (N). ");
-    //            }
-    //            else {
-    //                if (input == "Y") {
-    //                    startGame = true;
-    //                }
-    //                dropToken();
-    //            }
-    //        }
-    //    }
+    
 
     public void start() {
 
     }
 
 
-//        public void selectToken() {
-//            boolean validInput = false;
-//            Scanner scanner;
-//            String input = scanner.nextLine().trim().toUpperCase();
-//            while(!validInput) {
-//                System.out.println("Player 1, please choose to play as (X)s or (O)s: ");
-//
-//                if (input != "x" | input != "o") {
-//                    System.out.println("Invalid choice. Please select either (X) or (O). ");
-//                    continue;
-//                    if (input == "X"){
-//                        setP1Token("X");
-//                        setP2Token("O");
-//                    }
-//                    else if (input == "O") {
-//                        setP1Token("O");
-//                        setP2Token("X");
-//                    }
-//                    else{
-//                        System.out.println( "Invalid input. Error.");
-//                    }
-//                }
-//            }
-//        }
 
     public void declareWinner() {
         board.winner();
@@ -103,8 +79,49 @@ public class ConnectFourApp {
             String banner = Files.readString(Path.of("resources/myBanner.txt"));
             Files.lines(Path.of("resources", "myBanner.txt"))
                     .forEach(line -> {
+                        System.out.println("\033[33m" + line +  "\033[0m");
+//                        System.out.println("\033[31m" + line +  "\033[0m");
+//                        System.out.println(line);
+
+
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void endBanner() {
+        try {
+            String banner = Files.readString(Path.of("resources/endBanner.txt"));
+            Files.lines(Path.of("resources", "endBanner.txt"))
+                    .forEach(line -> {
                         System.out.println(line);
-                        // do something with 'line' here
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+            public void showWinP1() {
+                try {
+                    String banner = Files.readString(Path.of("resources/P1Wins.txt"));
+                    Files.lines(Path.of("resources", "P1Wins.txt"))
+                            .forEach(line -> {
+                                System.out.println("\033[36m" + line +  "\033[0m");
+                            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showWinP2() {
+        try {
+            String banner = Files.readString(Path.of("resources/P2Wins.txt"));
+            Files.lines(Path.of("resources", "P2Wins.txt"))
+                    .forEach(line -> {
+                        System.out.println("\033[31m" + line +  "\033[0m");
                     });
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,6 +131,9 @@ public class ConnectFourApp {
 
     // GETTERS & SETTERS
 
+    public void setBoard() {
+        this.board = Board.getInstance();
+    }
 
     public String getP1Token() {
         return p1Token;
