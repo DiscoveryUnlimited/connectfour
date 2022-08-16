@@ -1,4 +1,5 @@
 package com.game.connectfour;
+
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
@@ -8,67 +9,64 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class ConnectFourApp {
-        // this is main
+    // this is main
 
-        // FIELDS
-        private String p1 = "Player 1";
-        private String p2 = "Player 2";
-        private final Scanner scanner = new Scanner(System.in);
-        private final Board board = Board.getInstance();
-        private String p1Token;
-        private String p2Token;
-
-
-        // CONSTRUCTOR
-        public ConnectFourApp() {
-            // how do we do setName() when we have player 1 and player 2?
-        }
+    // FIELDS
+    private String p1 = "Player 1";
+    private String p2 = "Player 2";
+    private final Scanner scanner = new Scanner(System.in);
+    private final Board board = Board.getInstance();
+    private String p1Token;
+    private String p2Token;
 
 
+    // CONSTRUCTOR
+    public ConnectFourApp() {
+        // how do we do setName() when we have player 1 and player 2?
+    }
 
-        // BUSINESS METHODS
+
+    // BUSINESS METHODS
 
 
-        public void execute ()  {
-            showBanner();
+    public void execute() {
+        showBanner();
 //            showBannerOld();
-            showBoard();
-            play();
-            declareWinner();
-        }
+        showBoard();
+        play();
+        declareWinner();
+    }
 
     private void play() {
-            board.startPlay();
+        board.startPlay();
     }
 
     private void showBoard() {
-            board.printBoard();
+        board.printBoard();
     }
 
     // TODO
-        //    public void startGame() {
-        //        boolean startGame = false;
-        //        while(!startGame) {
-        //            System.out.println("Would you like to play a new game? [Y/N]:  ");
-        //            Scanner scanner;
-        //            String input = scanner.nextLine().trim().toUpperCase();
-        //            if (input != "Y" | input != "O") {
-        //                System.out.println("Invalid choice. Please select either (Y) or (N). ");
-        //            }
-        //            else {
-        //                if (input == "Y") {
-        //                    startGame = true;
-        //                }
-        //                dropToken();
-        //            }
-        //        }
-        //    }
+    //    public void startGame() {
+    //        boolean startGame = false;
+    //        while(!startGame) {
+    //            System.out.println("Would you like to play a new game? [Y/N]:  ");
+    //            Scanner scanner;
+    //            String input = scanner.nextLine().trim().toUpperCase();
+    //            if (input != "Y" | input != "O") {
+    //                System.out.println("Invalid choice. Please select either (Y) or (N). ");
+    //            }
+    //            else {
+    //                if (input == "Y") {
+    //                    startGame = true;
+    //                }
+    //                dropToken();
+    //            }
+    //        }
+    //    }
 
-        public void start() {
+    public void start() {
 
-        }
-
-
+    }
 
 
 //        public void selectToken() {
@@ -96,11 +94,11 @@ public class ConnectFourApp {
 //            }
 //        }
 
-        public void declareWinner() {
-            board.winner();
-        }
+    public void declareWinner() {
+        board.winner();
+    }
 
-    public void showBanner()  {
+    public void showBanner() {
         try {
             String banner = Files.readString(Path.of("resources/myBanner.txt"));
             Files.lines(Path.of("resources", "myBanner.txt"))
@@ -114,38 +112,32 @@ public class ConnectFourApp {
     }
 
 
+    // GETTERS & SETTERS
 
 
+    public String getP1Token() {
+        return p1Token;
+    }
 
+    public void setP1Token(String p1Token) {
+        this.p1Token = p1Token;
+    }
 
+    public String getP2Token() {
+        return p2Token;
+    }
 
-            // GETTERS & SETTERS
+    public void setP2Token(String p2Token) {
+        this.p2Token = p2Token;
+    }
 
-
-
-        public String getP1Token() {
-            return p1Token;
-        }
-
-        public void setP1Token(String p1Token) {
-            this.p1Token = p1Token;
-        }
-
-        public String getP2Token() {
-            return p2Token;
-        }
-
-        public void setP2Token(String p2Token) {
-            this.p2Token = p2Token;
-        }
-
-        @Override
-        public String toString() {
-            return "Controller{" +
-                    "player1='" +  + '\'' +
-                    ", player2='" +  + '\'' +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "Controller{" +
+                "player1='" + +'\'' +
+                ", player2='" + +'\'' +
+                '}';
+    }
 
 
 }
