@@ -1,22 +1,19 @@
 package com.game.connectfour;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import com.apps.util.Console;
 
 
-public class Board implements Cloneable {
+public class Board {
     //Field
+    private final Brain brain=new Brain();
     private boolean player = false;
     private boolean endGame = false;
     private int height = 10;
     private String symbol;
     private int numberInput;
-    private int userInput;
-    private String playAgain;
+    private String userInput;
     private final Scanner scanner = new Scanner(System.in);
-    List<List<String>> mainBoard = new ArrayList<>(List.of(
+    List<List<String>> board = new ArrayList<>(List.of(
             Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
             Arrays.asList("|", "-", "+", "-", "+", "-", "+", "-", "+", "-", "+", "-", "+", "-", "|"),
             Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
@@ -33,23 +30,6 @@ public class Board implements Cloneable {
 
     ));
 
-    List<List<String>> board = new ArrayList<>(mainBoard);
-
-//    List<List<String>> board;
-
-//    @Override
-//    public Board clone() throws CloneNotSupportedException {
-//        return (Board) super.clone();
-//    }
-//
-//    public void cloneCopy() throws CloneNotSupportedException {
-//        try {
-//            board = (Board) mainBoard.clone();
-//        } catch (CloneNotSupportedException e) {
-//            throw new Error();
-//        }
-//    }
-
     //business For Main
     void printBoard() {
         System.out.println("\n\n");
@@ -60,28 +40,56 @@ public class Board implements Cloneable {
                     .replaceAll(",", ""));
         }
         System.out.println("Welcome to play Connect Four");
-        System.out.println("board hashcode=" + board.hashCode());
-        System.out.println("mainBoard hashcode=" + mainBoard.hashCode());
     }
 
-    void startPlay() {
+    void startPlay(){
         while (!endGame) {
-            System.out.println("Where would you like to put? (1-7)");
-            userInput = scanner.nextInt();
-            numberInput = userInput * 2 - 1;// convert 1-7 to array slot position
+            promptForSlot();
             playerTurn();
-            dropToken(this.height, numberInput, symbol);
-            endGame = Brain.winCheck(board);
-            cls();
+            dropToken(height, numberInput, symbol,player);
+            endGame = brain.winCheck(board);
+            Console.clear();
             printBoard();
             winner();
         }
-        System.out.println("would you like to try again (y/n)?");
-        String playAgain = scanner.next();
-        if (playAgain.equalsIgnoreCase("y")) {
-            tryAgain();
+    }
+
+    private void promptForSlot() {
+        boolean validInput=false;
+        while(!validInput){
+        System.out.println("Where would you like to put? (1-7)");
+        userInput = scanner.nextLine();
+        if(userInput.matches("\\d{1}")) {
+            numberInput = Integer.parseInt(userInput) * 2 - 1;// convert 1-7 to array slot position
+            if(numberInput>=1&&numberInput<=14){
+                validInput=true;
+            }else{
+                System.out.println("please enter correct range number");
+            }
+        }}
+    }
+
+    private void playerTurn() {
+        player = !player;
+        if (!player) {
+            symbol = "X";
         } else {
-            System.out.println("Thanks for playing");
+            symbol = "O";
+        }
+    }
+
+    private void dropToken(Integer height, Integer numberInput, String symbol,boolean player) {
+        try {
+            if (board.get(height).get(numberInput).contains(" ")) {
+                board.get(height).set(numberInput, symbol);
+            } else {
+                height--;
+                dropToken(height, numberInput, symbol,player);
+            }
+        }catch(IndexOutOfBoundsException e){
+            this.player=!player;
+            System.out.println("This column is full, please choose another column to drop");
+            Console.pause(5000);
         }
     }
 
@@ -95,47 +103,8 @@ public class Board implements Cloneable {
         }
     }
 
-
-    private void tryAgain() {
-        height = 10;
-        endGame = false;
-        printBoard();
-    }
-
-//    board=new ArrayList<>(mainBoard);
-
-    //associated function with startPlay
-    private void playerTurn() {
-        player = !player;
-        if (!player) {
-            symbol = "X";
-        } else {
-            symbol = "O";
-        }
-    }
-
-
-    private void dropToken(Integer height, Integer numberInput, String symbol) {
-        if (board.get(height).get(numberInput).contains(" ")) {
-            board.get(height).set(numberInput, symbol);
-        } else {
-            height--;
-            dropToken(height, numberInput, symbol);
-        }
-    }
-
-
-    private static void cls() {
-        try {
-            new ProcessBuilder("clear", "cls").inheritIO().start().waitFor();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-
-        }
-    }
-
     static Board getInstance() {
-        return new Board();
+        return new Board(); //private ctor
     }
 
 }
