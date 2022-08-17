@@ -10,11 +10,11 @@ class Brain{
     private final List<String> tokens = new ArrayList<>(Arrays.asList("O", "X"));
 
     // CONSTRUCTOR
-    public Brain() {
+    Brain() {
     }
 
     // BUSINESS METHODS
-    public boolean winCheck(List<List<String>> board){
+    boolean winCheck(List<List<String>> board){
         boolean win = false;
         // if any checks find a win return win
         if (horizontalCheck(board) || verticalCheck(board) || forwardDiagonalCheck(board) || backwardDiagonalCheck(board)){
@@ -24,7 +24,7 @@ class Brain{
     }
 
 
-    public boolean fullBoardCheck(List<List<String>> board){
+    boolean fullBoardCheck(List<List<String>> board){
 
         boolean full = false;
 
@@ -47,8 +47,6 @@ class Brain{
 
         return full;
     }
-
-
 
     //Horizontal check
     private boolean horizontalCheck(List<List<String>> board){
@@ -185,14 +183,8 @@ class Brain{
         return win;
     }
 
-
     // ACCESSOR METHODS
-    public List<String> getTokens() {
+    private List<String> getTokens() {
         return tokens;
     }
-
-
-
-
-
 }
