@@ -48,7 +48,6 @@ class Board {
                     .replaceAll("]", "")
                     .replaceAll(",", ""));
         }
-        System.out.println("Welcome to Connect Four!");
     }
 
     void startPlay() {
