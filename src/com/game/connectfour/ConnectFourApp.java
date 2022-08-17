@@ -35,10 +35,10 @@ public class ConnectFourApp {
 
     private void restartGame() {
         boolean validInput = false;
-        while (!validInput){
+        while (!validInput) {
             System.out.println("\n\n\n\n\nWould you like to play again [y/n]?\n");
             String playAgain = scanner.nextLine().trim();
-            if (playAgain.matches("y|n")){
+            if (playAgain.matches("y|n")) {
                 if (playAgain.equalsIgnoreCase("y")) {
                     Console.clear();
                     execute();
@@ -66,10 +66,9 @@ public class ConnectFourApp {
 
     private void showBanner() {
         try {
-            String banner = Files.readString(Path.of("resources/myBanner.txt"));
             Files.lines(Path.of("resources", "myBanner.txt"))
                     .forEach(line -> {
-                        System.out.println("\033[33m" + line +  "\033[0m");
+                        System.out.println("\033[33m" + line + "\033[0m");
                     });
             Console.pause(3000);
         } catch (IOException e) {
@@ -79,7 +78,6 @@ public class ConnectFourApp {
 
     private void endBanner() {
         try {
-            String banner = Files.readString(Path.of("resources/endBanner.txt"));
             Files.lines(Path.of("resources", "endBanner.txt"))
                     .forEach(line -> {
                         System.out.println(line);
@@ -90,7 +88,6 @@ public class ConnectFourApp {
             e.printStackTrace();
         }
     }
-
 
 
     // GETTERS & SETTERS
