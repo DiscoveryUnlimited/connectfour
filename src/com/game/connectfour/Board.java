@@ -56,10 +56,8 @@ class Board {
             playerTurn();
             dropToken(height, numberInput, symbol, player);
             endGame = brain.winCheck(board)|| brain.fullBoardCheck(board);
-            System.out.println(brain.fullBoardCheck(board));
             Console.clear();
             printBoard();
-            winner();
         }
     }
 
@@ -67,18 +65,18 @@ class Board {
         boolean validInput = false;
         while (!validInput) {
             if (!player) {
-                System.out.println("Player 1's Turn:");
+                System.out.println("\nPlayer 1's Turn:");
             } else {
-                System.out.println("Player 2's Turn:");
+                System.out.println("\nPlayer 2's Turn:");
             }
-            System.out.println("Which column would you like to drop your token in? (1-7)");
+            System.out.println("\nWhich column would you like to drop your token in? (1-7)");
             userInput = scanner.nextLine();
             if (userInput.matches("\\d{1}")) {
                 numberInput = Integer.parseInt(userInput) * 2 - 1;// convert 1-7 to array slot position
                 if (numberInput >= 1 && numberInput <= 14) {
                     validInput = true;
                 } else {
-                    System.out.println("Please pick a column number from 1 to 7.");
+                    System.out.println("\nPlease pick a column number from 1 to 7.");
                 }
             }
         }
@@ -103,7 +101,7 @@ class Board {
             }
         } catch (IndexOutOfBoundsException e) {
             this.player = !player;
-            System.out.println("This column is full, please choose a different column.");
+            System.out.println("\nThis column is full, please choose a different column.");
             Console.pause(5000);
         }
     }
@@ -112,8 +110,8 @@ class Board {
         if (endGame) {
             if(brain.fullBoardCheck(board)){
                 try {
-                    String banner = Files.readString(Path.of("resources/P2Wins.txt"));
-                    Files.lines(Path.of("resources", "P2Wins.txt"))
+                    String banner = Files.readString(Path.of("resources/draw.txt"));
+                    Files.lines(Path.of("resources", "draw.txt"))
                             .forEach(line -> {
                                 System.out.println("\033[33m" + line +  "\033[0m");
                             });
