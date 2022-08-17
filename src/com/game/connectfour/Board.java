@@ -48,7 +48,7 @@ class Board {
                     .replaceAll("]", "")
                     .replaceAll(",", ""));
         }
-        System.out.println("Welcome to play Connect Four");
+        System.out.println("Welcome to Connect Four!");
     }
 
     void startPlay() {
@@ -68,18 +68,18 @@ class Board {
         boolean validInput = false;
         while (!validInput) {
             if (!player) {
-                System.out.println("player1 Turn");
+                System.out.println("Player 1's Turn:");
             } else {
-                System.out.println("player2 Turn");
+                System.out.println("Player 2's Turn:");
             }
-            System.out.println("Where would you like to put? (1-7)");
+            System.out.println("Which column would you like to drop your token in? (1-7)");
             userInput = scanner.nextLine();
             if (userInput.matches("\\d{1}")) {
                 numberInput = Integer.parseInt(userInput) * 2 - 1;// convert 1-7 to array slot position
                 if (numberInput >= 1 && numberInput <= 14) {
                     validInput = true;
                 } else {
-                    System.out.println("please enter correct number of range");
+                    System.out.println("Please pick a column number from 1 to 7.");
                 }
             }
         }
@@ -104,7 +104,7 @@ class Board {
             }
         } catch (IndexOutOfBoundsException e) {
             this.player = !player;
-            System.out.println("This column is full, please try again to another column to drop");
+            System.out.println("This column is full, please choose a different column.");
             Console.pause(5000);
         }
     }
@@ -112,7 +112,15 @@ class Board {
     void winner() {
         if (endGame) {
             if(brain.fullBoardCheck(board)){
-                System.out.println("Draw");
+                try {
+                    String banner = Files.readString(Path.of("resources/P2Wins.txt"));
+                    Files.lines(Path.of("resources", "P2Wins.txt"))
+                            .forEach(line -> {
+                                System.out.println("\033[33m" + line +  "\033[0m");
+                            });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             else if (player) {
                     try {
