@@ -55,7 +55,7 @@ class Board {
             promptForSlot();
             playerTurn();
             dropToken(height, numberInput, symbol, player);
-            endGame = brain.winCheck(board)|| brain.fullBoardCheck(board);
+            endGame = brain.winCheck(board) || brain.fullBoardCheck(board);
             Console.clear();
             printBoard();
         }
@@ -108,33 +108,29 @@ class Board {
 
     void winner() {
         if (endGame) {
-            if(brain.fullBoardCheck(board)){
+            if (brain.fullBoardCheck(board)) {
                 try {
-                    String banner = Files.readString(Path.of("resources/draw.txt"));
                     Files.lines(Path.of("resources", "draw.txt"))
                             .forEach(line -> {
-                                System.out.println("\033[33m" + line +  "\033[0m");
+                                System.out.println("\033[33m" + line + "\033[0m");
                             });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-            else if (player) {
-                    try {
-                        String banner = Files.readString(Path.of("resources/P1Wins.txt"));
-                        Files.lines(Path.of("resources", "P1Wins.txt"))
-                                .forEach(line -> {
-                                    System.out.println("\033[36m" + line +  "\033[0m");
-                                });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            } else if (player) {
+                try {
+                    Files.lines(Path.of("resources", "P1Wins.txt"))
+                            .forEach(line -> {
+                                System.out.println("\033[36m" + line + "\033[0m");
+                            });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 try {
-                    String banner = Files.readString(Path.of("resources/P2Wins.txt"));
                     Files.lines(Path.of("resources", "P2Wins.txt"))
                             .forEach(line -> {
-                                System.out.println("\033[31m" + line +  "\033[0m");
+                                System.out.println("\033[31m" + line + "\033[0m");
                             });
                 } catch (IOException e) {
                     e.printStackTrace();
