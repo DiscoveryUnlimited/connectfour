@@ -56,12 +56,12 @@ public class ConnectFourApp {
         board.printBoard();
     }
 
-    public void declareWinner() {
+    private void declareWinner() {
         board.winner();
         Console.pause(2000);
     }
 
-    public void showBanner() {
+    private void showBanner() {
         try {
             String banner = Files.readString(Path.of("resources/myBanner.txt"));
             Files.lines(Path.of("resources", "myBanner.txt"))
@@ -74,7 +74,7 @@ public class ConnectFourApp {
         }
     }
 
-    public void endBanner() {
+    private void endBanner() {
         try {
             String banner = Files.readString(Path.of("resources/endBanner.txt"));
             Files.lines(Path.of("resources", "endBanner.txt"))
@@ -115,10 +115,9 @@ public class ConnectFourApp {
 
     // GETTERS & SETTERS
 
-    public void setBoard() {
+    private void setBoard() {
         this.board = Board.getInstance();
     }
-
 
     @Override
     public String toString() {
@@ -127,6 +126,4 @@ public class ConnectFourApp {
                 ", player2='" + +'\'' +
                 '}';
     }
-
-
 }
