@@ -25,9 +25,23 @@ class Brain{
 
 
     public boolean fullBoardCheck(List<List<String>> board){
+
         boolean full = false;
-        // checks to see if there are any blank spaces
-        if (!board.contains(" ")){
+
+        List<List<String>> augmentedBoard = new ArrayList<>(Arrays.asList(board.get(0),board.get(2),board.get(4),
+                board.get(6),board.get(8),board.get(10)));
+
+        List<Integer> num = new ArrayList<>(0);
+        for (List innerArray: augmentedBoard) {
+            int frequency = Collections.frequency(innerArray, getTokens().get(0));
+            int frequency2 = Collections.frequency(innerArray, getTokens().get(1));
+
+            if (frequency+frequency2 == 7){
+                num.add(1);
+            }
+        }
+
+        if (num.size() == 6){
             full = true;
         }
 
