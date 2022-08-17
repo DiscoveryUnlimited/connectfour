@@ -21,6 +21,7 @@ public class ConnectFourApp {
 
     // BUSINESS METHODS
     public void execute() {
+        Console.clear();
         showBanner();
         Console.clear();
         setBoard();
@@ -35,12 +36,14 @@ public class ConnectFourApp {
     private void restartGame() {
         boolean validInput = false;
         while (!validInput){
-            System.out.println("Would you like to play again [y/n]?\n");
+            System.out.println("\n\n\n\n\nWould you like to play again [y/n]?\n");
             String playAgain = scanner.nextLine().trim();
             if (playAgain.matches("y|n")){
                 if (playAgain.equalsIgnoreCase("y")) {
+                    Console.clear();
                     execute();
                 } else {
+                    Console.clear();
                     endBanner();
                 }
                 validInput = true;
@@ -68,7 +71,7 @@ public class ConnectFourApp {
                     .forEach(line -> {
                         System.out.println("\033[33m" + line +  "\033[0m");
                     });
-            Console.pause(5000);
+            Console.pause(3000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,36 +84,13 @@ public class ConnectFourApp {
                     .forEach(line -> {
                         System.out.println(line);
                     });
+            Console.pause(3000);
+            Console.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-
-//    public void showWinP1() {
-//        try {
-//            String banner = Files.readString(Path.of("resources/P1Wins.txt"));
-//            Files.lines(Path.of("resources", "P1Wins.txt"))
-//                    .forEach(line -> {
-//                        System.out.println("\033[36m" + line +  "\033[0m");
-//                    });
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    public void showWinP2() {
-//        try {
-//            String banner = Files.readString(Path.of("resources/P2Wins.txt"));
-//            Files.lines(Path.of("resources", "P2Wins.txt"))
-//                    .forEach(line -> {
-//                        System.out.println("\033[31m" + line +  "\033[0m");
-//                    });
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
     // GETTERS & SETTERS
