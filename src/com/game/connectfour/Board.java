@@ -1,11 +1,16 @@
 package com.game.connectfour;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
-import com.apps.util.Console;
+
+import com.apps.util.*;
 
 
-public class Board {
+class Board {
     //Field
-    private final Brain brain=new Brain();
+    private final Brain brain = new Brain();
     private boolean player = false;
     private boolean endGame = false;
     private int height = 10;
@@ -13,6 +18,10 @@ public class Board {
     private int numberInput;
     private String userInput;
     private final Scanner scanner = new Scanner(System.in);
+
+    private Board() {
+    }
+
     List<List<String>> board = new ArrayList<>(List.of(
             Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
             Arrays.asList("|", "-", "+", "-", "+", "-", "+", "-", "+", "-", "+", "-", "+", "-", "|"),
@@ -25,8 +34,8 @@ public class Board {
             Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
             Arrays.asList("|", "-", "+", "-", "+", "-", "+", "-", "+", "-", "+", "-", "+", "-", "|"),
             Arrays.asList("|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|", " ", "|"),
-                  List.of("|", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "|"),
-                  List.of(" ", "1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ")
+            List.of("|", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "|"),
+            List.of(" ", "1", " ", "2", " ", "3", " ", "4", " ", "5", " ", "6", " ", "7", " ")
 
     ));
 
@@ -42,12 +51,13 @@ public class Board {
         System.out.println("Welcome to play Connect Four");
     }
 
-    void startPlay(){
+    void startPlay() {
         while (!endGame) {
             promptForSlot();
             playerTurn();
-            dropToken(height, numberInput, symbol,player);
-            endGame = brain.winCheck(board);
+            dropToken(height, numberInput, symbol, player);
+            endGame = brain.winCheck(board)|| brain.fullBoardCheck(board);
+            System.out.println(brain.fullBoardCheck(board));
             Console.clear();
             printBoard();
             winner();
@@ -55,18 +65,24 @@ public class Board {
     }
 
     private void promptForSlot() {
-        boolean validInput=false;
-        while(!validInput){
-        System.out.println("Where would you like to put? (1-7)");
-        userInput = scanner.nextLine();
-        if(userInput.matches("\\d{1}")) {
-            numberInput = Integer.parseInt(userInput) * 2 - 1;// convert 1-7 to array slot position
-            if(numberInput>=1&&numberInput<=14){
-                validInput=true;
-            }else{
-                System.out.println("please enter correct range number");
+        boolean validInput = false;
+        while (!validInput) {
+            if (!player) {
+                System.out.println("player1 Turn");
+            } else {
+                System.out.println("player2 Turn");
             }
-        }}
+            System.out.println("Where would you like to put? (1-7)");
+            userInput = scanner.nextLine();
+            if (userInput.matches("\\d{1}")) {
+                numberInput = Integer.parseInt(userInput) * 2 - 1;// convert 1-7 to array slot position
+                if (numberInput >= 1 && numberInput <= 14) {
+                    validInput = true;
+                } else {
+                    System.out.println("please enter correct number of range");
+                }
+            }
+        }
     }
 
     private void playerTurn() {
@@ -78,33 +94,52 @@ public class Board {
         }
     }
 
-    private void dropToken(Integer height, Integer numberInput, String symbol,boolean player) {
+    private void dropToken(Integer height, Integer numberInput, String symbol, boolean player) {
         try {
             if (board.get(height).get(numberInput).contains(" ")) {
                 board.get(height).set(numberInput, symbol);
             } else {
                 height--;
-                dropToken(height, numberInput, symbol,player);
+                dropToken(height, numberInput, symbol, player);
             }
-        }catch(IndexOutOfBoundsException e){
-            this.player=!player;
-            System.out.println("This column is full, please choose another column to drop");
+        } catch (IndexOutOfBoundsException e) {
+            this.player = !player;
+            System.out.println("This column is full, please try again to another column to drop");
             Console.pause(5000);
         }
     }
 
     void winner() {
         if (endGame) {
-            if (player) {
-                System.out.println("player1 win");
+            if(brain.fullBoardCheck(board)){
+                System.out.println("Draw");
+            }
+            else if (player) {
+                    try {
+                        String banner = Files.readString(Path.of("resources/P1Wins.txt"));
+                        Files.lines(Path.of("resources", "P1Wins.txt"))
+                                .forEach(line -> {
+                                    System.out.println("\033[36m" + line +  "\033[0m");
+                                });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
             } else {
-                System.out.println("player2 win");
+                try {
+                    String banner = Files.readString(Path.of("resources/P2Wins.txt"));
+                    Files.lines(Path.of("resources", "P2Wins.txt"))
+                            .forEach(line -> {
+                                System.out.println("\033[31m" + line +  "\033[0m");
+                            });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     static Board getInstance() {
-        return new Board(); //private ctor
+        return new Board();
     }
 
 }
